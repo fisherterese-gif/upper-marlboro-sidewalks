@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Overview — Where the Sidewalk Ends</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header>
+  <div class="container navbar">
+    <div class="brand">Where the Sidewalk Ends <span class="badge">CityLab</span></div>
+    
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="maps.html">Maps</a>
+      <a href="community.html">Community</a>
+      <a href="findings.html">Findings</a>
+      <a href="questionnaire.html">Blank Questionnaire</a>
+      <a href="methods.html">Data & Methods</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="sources.html">Sources</a>
+    </nav>
+    
+  </div>
+</header>
+<main class="container">
+
+<section class="card">
+  <h1>Walkability, Health & Equity in Upper Marlboro, MD</h1>
+  <p class="kicker"><strong>Author:</strong> Danielle T. Fisher · CityLab Catalyst · Johns Hopkins Carey & MICA</p>
+  <p class="small">Goal: map walkability gaps near schools, bus stops, and daily-need destinations, and propose practical fixes that improve safety, health, and access. Discontinuous sidewalks and unsafe crossings create not just inconvenience but inequity.</p>
+</section>
+<section class="card grid grid-2">
+  <div>
+    <h2>Framework & Methods</h2>
+    <ul>
+      <li>CityLab lenses: Livable Habitat, Healthy People, Resilient Communities, Empowered Citizens, Inclusive Prosperity</li>
+      <li>Hybrid methods: GIS mapping, field observation, 10 interviews, comparative analysis</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Deliverables</h2>
+    <ul>
+      <li>Interactive multi-page website</li>
+      <li>Slide deck + short video</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<footer class="container small">
+  <p>&copy; Overview • Danielle T. Fisher • CityLab • Upper Marlboro</p>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+
+<!-- Inlined for reliability -->
+<script>
+const MAP_POINTS = [
+  {
+    "type": "gap",
+    "lat": 38.815,
+    "lng": -76.749,
+    "title": "Gap near corridor",
+    "subtitle": "MD-4 shoulder",
+    "desc": "Missing sidewalk; 50 mph traffic; no buffer",
+    "photo": "Screenshot 2025-11-05 at 1.54.35 PM.png"
+  },
+  {
+    "type": "school",
+    "lat": 38.815692344644866,
+    "lng": -76.75285971020128,
+    "title": "School zone crossing",
+    "subtitle": "Needs high-vis crosswalk",
+    "desc": "Add curb extensions + ADA ramps",
+    "photo": "Screenshot 2025-11-05 at 1.52.31 PM.png"
+  },
+  {
+    "type": "transit",
+    "lat": 38.80992601879754,
+    "lng": -76.73906368705464,
+    "title": "Bus stop",
+    "subtitle": "Dim lighting",
+    "desc": "Add pedestrian-scale lighting + bench",
+    "photo": "Screenshot 2025-11-05 at 2.01.27 PM.png"
+  },
+  {
+    "type": "park",
+    "lat": 38.79507107217081,
+    "lng": -76.7290218202929,
+    "title": "Park access",
+    "subtitle": "Only park with continuous sidewalk",
+    "desc": "Model for future links",
+    "photo": "Screenshot 2025-11-05 at 1.50.49 PM.png"
+  },
+  {
+    "type": "grocery",
+    "lat": 38.80217444967078,
+    "lng": -76.71826575133372,
+    "title": "Grocery access",
+    "subtitle": "Highway-oriented site",
+    "desc": "Sidewalk connection to stop needed",
+    "photo": "Screenshot 2025-11-05 at 1.59.16 PM.png"
+  },
+  {
+    "type": "hazard",
+    "lat": 38.82207937640368,
+    "lng": -76.74283615377965,
+    "title": "Unsafe shoulder",
+    "subtitle": "No sidewalk",
+    "desc": "Priority sub-mile gap to fill",
+    "photo": "Screenshot 2025-11-05 at 1.48.18 PM.png"
+  }
+];
+const RESPONSES = [
+  {
+    "q": "What makes walking difficult here?",
+    "a": "Unsafe crossings, missing sidewalks, unreliable bus schedules, and long waits in poorly lit areas."
+  },
+  {
+    "q": "How do families adapt?",
+    "a": "They leave early for multi\u2011transfer commutes, choose longer routes to avoid danger, or stop walking entirely."
+  },
+  {
+    "q": "What\u2019s the human cost?",
+    "a": "Time lost, stress, and exclusion from community life. \u201cI have to schedule a bus a week ahead just to buy groceries.\u201d"
+  }
+];
+const FINDINGS = [
+  {
+    "title": "Discontinuous sidewalks",
+    "text": "Gaps force people to walk in roadway shoulders near high\u2011speed roads; only one park has sidewalk access."
+  },
+  {
+    "title": "Disconnected transit",
+    "text": "Stops cluster along MD\u20114 with few safe links to groceries, clinics, or parks."
+  },
+  {
+    "title": "Quant snapshot: local vs global",
+    "text": "Sidewalk coverage near schools 22% vs 95%/90% in Tokyo/Osaka; walk to work/school 6% vs 31%; transit reliability 4.2 vs 9.4."
+  },
+  {
+    "title": "PG vs Anne Arundel",
+    "text": "PG has ~3\u00d7 fewer sidewalk miles and higher pedestrian injury rates; infrastructure equity matters."
+  }
+];
+const RECOMMENDATIONS = [
+  {
+    "title": "Fill sub\u2011mile sidewalk gaps near schools & stops",
+    "text": "Add continuous sidewalks on priority segments; pair with curb ramps and crosswalks.",
+    "type": "near-term"
+  },
+  {
+    "title": "Lighting & comfort at priority bus stops",
+    "text": "Pedestrian\u2011scale lighting, benches, and shade at stops on MD\u20114 and collectors.",
+    "type": "near-term"
+  },
+  {
+    "title": "Continuous corridors & Safe Routes to School",
+    "text": "Build continuous sidewalks along MD\u20114/Woodyard Rd; implement SRTS zones around schools.",
+    "type": "long-term"
+  },
+  {
+    "title": "Integrate bus planning with access data",
+    "text": "Shared GIS across DPW&T, WMATA, TheBus, PGCPS, and HOAs for coordinated upgrades.",
+    "type": "long-term"
+  }
+];
+const GALLERY = [
+  {
+    "file": "Screenshot 2025-11-05 at 1.54.35 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.52.31 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 2.01.27 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.50.49 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.59.16 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.48.18 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.57.26 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.41.17 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.46.48 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 2.18.33 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 2.36.33 PM.png",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.06.35 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.05.49 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-04 at 11.55.34 PM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 1.00.29 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 3.53.37 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.14.03 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.13.21 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.11.01 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.04.53 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 12.10.30 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 4.31.08 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 4.20.53 AM.jpeg",
+    "caption": ""
+  },
+  {
+    "file": "Screenshot 2025-11-05 at 4.11.52 AM.jpeg",
+    "caption": ""
+  }
+];
+const SOURCES = [
+  "Centers for Disease Control and Prevention. (2023). Adult obesity prevalence by county (BRFSS).",
+  "Maryland Department of Health. (2024). Physical activity surveillance indicators.",
+  "Maryland Department of Transportation. (2024). State crash statistics & pedestrian safety reports.",
+  "Prince George\u2019s County DPW&T. (2025). Transportation & Sidewalks MapServer (GIS layers).",
+  "WMATA. (2025). Metrobus GTFS & stop datasets.",
+  "Anne Arundel County DPW. (2025). Sidewalk inventory & pedestrian network planning.",
+  "U.S. Census Bureau. (2023). ACS 1\u2011year estimates: Means of transportation to work.",
+  "Apple Maps. (2025, Nov 5). Walking route: Upper Marlboro to Safeway.",
+  "MLIT Japan. (2024). Urban Transport Data Portal: Pedestrian Network Statistics.",
+  "World Health Organization. (2023). Global Road Safety Report."
+];
+
+</script>
+<script>
+
+(function(){
+  const path = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav a').forEach(a=>{
+    const href = a.getAttribute('href');
+    if ((path==='' && href==='index.html') || href===path) a.classList.add('active');
+  });
+})();
+
+function initMap(){
+  const el=document.getElementById('mapView'); if(!el) return;
+  const map=L.map(el).setView([38.815,-76.749],12);
+  const bases={
+    OSM:L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}),
+    Toner:L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',{attribution:'Stamen'}),
+    Terrain:L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',{attribution:'Stamen'})
+  };
+  bases.OSM.addTo(map);
+  const icons={
+    gap:L.icon({iconUrl:'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',iconSize:[25,41],iconAnchor:[12,41]}),
+    school:L.divIcon({className:'',html:'<div style="background:#ffef5a;border:2px solid #333;padding:2px 8px;border-radius:8px;color:#111;font-weight:800">S</div>'}),
+    transit:L.divIcon({className:'',html:'<div style="background:#9be7ff;border:2px solid #333;padding:2px 8px;border-radius:8px;color:#111;font-weight:800">T</div>'}),
+    hazard:L.divIcon({className:'',html:'<div style="background:#ff9b9b;border:2px solid #333;padding:2px 8px;border-radius:8px;color:#111;font-weight:800">!</div>'}),
+    park:L.divIcon({className:'',html:'<div style="background:#b6ffb6;border:2px solid #333;padding:2px 8px;border-radius:8px;color:#111;font-weight:800">P</div>'}),
+    grocery:L.divIcon({className:'',html:'<div style="background:#ffd1a1;border:2px solid #333;padding:2px 8px;border-radius:8px;color:#111;font-weight:800">G</div>'})
+  };
+  const group=L.featureGroup().addTo(map);
+  function render(cat){
+    group.clearLayers();
+    const pts=cat==='all'?MAP_POINTS:MAP_POINTS.filter(p=>p.type===cat);
+    pts.forEach(p=>{
+      const m=L.marker([p.lat,p.lng],{icon:icons[p.type]||icons.gap});
+      let html=`<strong>${p.title||'Point'}</strong>`;
+      if(p.subtitle) html+=`<br/><em>${p.subtitle}</em>`;
+      if(p.desc) html+=`<br/>${p.desc}`;
+      if(p.photo) html+=`<br/><img src="assets/images/${p.photo}" style="width:200px;margin-top:6px;border-radius:10px;border:1px solid #fff2">`;
+      m.bindPopup(html).addTo(group);
+    });
+    try{ map.fitBounds(group.getBounds(),{padding:[24,24]}); }catch(e){}
+  }
+  const dataset=document.getElementById('dataset');
+  const basemap=document.getElementById('basemap');
+  dataset && dataset.addEventListener('change',e=>render(e.target.value));
+  basemap && basemap.addEventListener('change',e=>{
+    Object.values(bases).forEach(l=>map.removeLayer(l)); bases[e.target.value].addTo(map);
+  });
+  render('all');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  ['findingsList','recsList','sourcesList','gallery','responses'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    if(id==='findingsList') FINDINGS.forEach(f=>{const li=document.createElement('li'); li.innerHTML=`<strong>${f.title}</strong> — ${f.text}`; el.appendChild(li);});
+    if(id==='recsList') RECOMMENDATIONS.forEach(r=>{const li=document.createElement('li'); li.innerHTML=`<strong>${r.title}</strong> — ${r.text} <span class="tag">${r.type}</span>`; el.appendChild(li);});
+    if(id==='sourcesList') SOURCES.forEach(s=>{const li=document.createElement('li'); li.textContent=s; el.appendChild(li);});
+    if(id==='gallery') (GALLERY||[]).forEach(img=>{const fig=document.createElement('figure'); fig.innerHTML=`<img src="assets/images/${img.file}" alt=""><figcaption class="small">${img.caption or ''}</figcaption>`; el.appendChild(fig);});
+    if(id==='responses') RESPONSES.forEach(r=>{const d=document.createElement('details'); const s=document.createElement('summary'); s.textContent=r.q; d.appendChild(s); const p=document.createElement('p'); p.textContent=r.a; d.appendChild(p); el.appendChild(d);});
+  });
+  initMap();
+});
+
+</script>
+
+</body>
+</html>

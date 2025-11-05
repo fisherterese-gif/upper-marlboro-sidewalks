@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blank Questionnaire — Where the Sidewalk Ends</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header>
+  <div class="container navbar">
+    <div class="brand">Where the Sidewalk Ends <span class="badge">CityLab</span></div>
+    
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="maps.html">Maps</a>
+      <a href="community.html">Community</a>
+      <a href="findings.html">Findings</a>
+      <a href="questionnaire.html">Blank Questionnaire</a>
+      <a href="methods.html">Data & Methods</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="sources.html">Sources</a>
+    </nav>
+    
+  </div>
+</header>
+<main class="container">
+
+<section class="card">
+  <h1>Blank Questionnaire (Print or Fill)</h1>
+  <p class="print-note">Use your browser’s <strong>Print → Save as PDF</strong> to submit a copy. Aligned with CityLab lenses.</p>
+</section>
+<section class="card">
+  <h2>Participant & Context</h2>
+  <p><strong>Date:</strong> ____________ &nbsp; <strong>Time:</strong> ____________ &nbsp; <strong>Location/Neighborhood:</strong> __________________________________</p>
+  <p><strong>Role (parent/guardian/student/elder/other):</strong> __________________________________</p>
+</section>
+<section class="card">
+  <h2>Daily Mobility</h2>
+  <ol>
+    <li>Primary daily destinations (school, work, groceries, park): __________________________________</li>
+    <li>Usual travel modes (walk, bus, carpool, etc.): __________________________________</li>
+    <li>What makes walking here <em>hard</em> or <em>easy</em>?</li>
+    <li>Routes you avoid and why (traffic, lighting, crossings): __________________________________</li>
+    <li>Transit access: how reliable are the buses you use? __________________________________</li>
+  </ol>
+</section>
+<section class="card">
+  <h2>Safety & Comfort</h2>
+  <ol start="6">
+    <li>Where do you feel unsafe walking? __________________________________</li>
+    <li>Lighting at night near bus stops/crossings: __________________________________</li>
+    <li>Crosswalks/ramps/benches conditions: __________________________________</li>
+  </ol>
+</section>
+<section class="card">
+  <h2>CityLab Lenses</h2>
+  <ol start="9">
+    <li><strong>Livable Habitat:</strong> Built environment that helps/hurts daily movement __________________________________</li>
+    <li><strong>Healthy People:</strong> Impact on stress/time/physical activity __________________________________</li>
+    <li><strong>Resilient Communities:</strong> What happens during rain/snow/heat? __________________________________</li>
+    <li><strong>Empowered Citizens:</strong> Who do you contact when sidewalks/crossings fail? __________________________________</li>
+    <li><strong>Inclusive Prosperity:</strong> Effects on access to jobs/shops/services __________________________________</li>
+  </ol>
+</section>
+<section class="card">
+  <h2>Improvements & Priorities</h2>
+  <ol start="14">
+    <li>Top 3 fixes you want to see (specific): __________________________________</li>
+    <li>If you had $100, where would you spend it first? __________________________________</li>
+  </ol>
+</section>
+<section class="card">
+  <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+</section>
+
+</main>
+<footer class="container small">
+  <p>&copy; Blank Questionnaire • Danielle T. Fisher • CityLab • Upper Marlboro</p>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
