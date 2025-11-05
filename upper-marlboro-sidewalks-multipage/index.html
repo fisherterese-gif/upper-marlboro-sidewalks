@@ -1,21 +1,110 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Where the Sidewalk Ends: Upper Marlboro</title>
-    <!-- Tailwind CDN for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Leaflet CSS (CDN) -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-  </head>
-  <body class="bg-sky-50">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Where the Sidewalk Ends — Upper Marlboro</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<header>
+  <div class="container navbar">
+    <div class="brand">Where the Sidewalk Ends <span class="badge">v1</span></div>
+    <nav class="menu">
+      <a href="index.html">Maps</a>
+      <div class="dropdown">
+        <button>Profiles ▾</button>
+        <div class="dropdown-menu">
+          <a href="#profiles">Resident snapshots</a>
+          <a href="#profiles">Business/Org voices</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button>Data & Methods ▾</button>
+        <div class="dropdown-menu">
+          <a href="#methods">Data sources</a>
+          <a href="#methods">Assumptions</a>
+          <a href="#methods">Limitations</a>
+        </div>
+      </div>
+      <a href="#compare">Compare</a>
+      <a href="#video">Video</a>
+      <a href="#sources">Sources</a>
+      <a href="community.html">Community</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1>Mapping Gaps in Walkability — Upper Marlboro, MD</h1>
+  <p class="kicker">Use the dropdowns to switch datasets and base maps.</p>
+
+  <div class="card">
+    <div class="flex" style="margin-bottom:10px">
+      <label for="dataset">Dataset</label>
+      <select id="dataset" class="select">
+        <option>Sidewalk Gaps</option>
+        <option>Schools</option>
+      </select>
+      <label for="basemap">Basemap</label>
+      <select id="basemap" class="select">
+        <option>OSM</option>
+        <option>Toner</option>
+        <option>Terrain</option>
+      </select>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <section id="profiles" class="grid grid-2" style="margin-top:20px">
+    <div class="card">
+      <h2>Resident Profile</h2>
+      <p>“I have to push the stroller on the road for two blocks—no sidewalk on our side.”</p>
+    </div>
+    <div class="card">
+      <h2>Org Perspective</h2>
+      <p>Local nonprofit notes missing curb ramps near schools and bus stops.</p>
+    </div>
+  </section>
+
+  <section id="methods" class="card" style="margin-top:20px">
+    <h2>Data & Methods</h2>
+    <ul>
+      <li>OpenStreetMap base tiles; demo layers bundled as GeoJSON.</li>
+      <li>Replace <code>sidewalks</code> &amp; <code>schools</code> objects in <code>assets/app.js</code> with your datasets.</li>
+    </ul>
+  </section>
+
+  <section id="compare" class="grid grid-2" style="margin-top:20px">
+    <div class="card"><h2>Before</h2><p>Baseline conditions.</p></div>
+    <div class="card"><h2>After</h2><p>Proposed improvements.</p></div>
+  </section>
+
+  <section id="video" class="card" style="margin-top:20px">
+    <h2>Video</h2>
+    <p class="small">Drop in a YouTube link or MP4 here.</p>
+    <div class="card" style="background:rgba(0,0,0,.35)">
+      <p>Video placeholder</p>
+    </div>
+  </section>
+
+  <section id="sources" class="card" style="margin-top:20px">
+    <h2>Sources</h2>
+    <ul>
+      <li>OpenStreetMap contributors</li>
+      <li>Community interviews (parent/guardian)</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="container small">
+  <p>&copy; <span id="y"></span> Danielle T. Fisher • CityLab • Upper Marlboro Sidewalks</p>
+</footer>
+
+<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/app.js"></script>
+</body>
 </html>
